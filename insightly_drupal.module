@@ -3,7 +3,7 @@
 function insightly_drupal_help($path, $arg){
 	switch ($path){
 		case "admin/help#insightly_drupal":
-			return 'This is the help text for Insightly Integration module for Drupal.';
+			return 'This is the help text for Insightly Integration for Drupal module.';
 			break;
 	}
 }
