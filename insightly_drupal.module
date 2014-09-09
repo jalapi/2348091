@@ -1,0 +1,16 @@
+<?php
+
+function insightly_drupal_help($path, $arg){
+	switch ($path){
+		case "admin/help#insightly_drupal":
+			return 'This is the help text for Insightly Integration module for Drupal.';
+			break;
+	}
+}
+
+function insightly_drupal_block_info(){
+ $blocks['insightly_drupal']=array('info'=>'Test Block for Integration');
+ return $blocks;
+}
+
+
