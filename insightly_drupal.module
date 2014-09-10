@@ -1,5 +1,17 @@
 <?php
 
+function hook_form_entityform_edit_form_alter(&$form, &$form_state, $form_id) {
+(&$form, &$form_state, $form_id) {
+    dpm($form);
+}
+
+
+
+
+
+
+
+//Useless tests from this point onwards, can be removed
 function insightly_drupal_help($path, $arg){
 	switch ($path){
 		case "admin/help#insightly_drupal":
@@ -12,5 +24,7 @@ function insightly_drupal_block_info(){
  $blocks['insightly_drupal']=array('info'=>'Test Block for Integration');
  return $blocks;
 }
+
+
 
 
