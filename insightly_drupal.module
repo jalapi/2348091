@@ -1,9 +1,9 @@
 <?php
 
-function hook_form_entityform_edit_form_alter(&$form, &$form_state, $form_id) {
+/*function hook_form_entityform_edit_form_alter(&$form, &$form_state, $form_id) {
 (&$form, &$form_state, $form_id) {
     dpm($form);
-}
+}*/
 
 
 
@@ -15,6 +15,9 @@ function hook_form_entityform_edit_form_alter(&$form, &$form_state, $form_id) {
 function insightly_drupal_help($path, $arg){
 	switch ($path){
 		case "admin/help#insightly_drupal":
+			//$var='seppo';
+			//dpm('paavo');
+			//dpm($var);
 			return 'This is the help text for Insightly Integration for Drupal module.';
 			break;
 	}
