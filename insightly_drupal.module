@@ -1,9 +1,10 @@
 <?php
 
-/*function hook_form_entityform_edit_form_alter(&$form, &$form_state, $form_id) {
-(&$form, &$form_state, $form_id) {
-    dpm($form);
-}*/
+
+// This is not the correct hook. Probably has to be done with Rules https://www.drupal.org/project/rules
+function insightly_drupal_form_entityform_edit_form_alter(&$form, &$form_state, $form_id) {
+    dpm('It works!');
+}
 
 
 
