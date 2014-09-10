@@ -2,4 +2,3 @@ name = Insightly Integration for Drupal
 description = A module used to send information from a contact form to Insightly
 core = 7.x
 dependencies[] = entityform
-dependencies[] = entityform_notifications
