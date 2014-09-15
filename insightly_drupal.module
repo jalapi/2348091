@@ -1,9 +1,15 @@
 <?php
 
+function insightly_drupal_form_entityform_edit_form_alter(&$form, &$form_state) {
+ dpm("moi");
 
-// This is not the correct hook. Probably has to be done with Rules https://www.drupal.org/project/rules
-function insightly_drupal_form_entityform_edit_form_alter(&$form, &$form_state, $form_id) {
-    dpm('It works!');
+ $form['actions']['submit']['#submit'] = array('entityform_edit_form_submit','insightly_drupal_submithook');
+ //dpm($form);
+}
+
+
+function insightly_drupal_submithook(){
+ dpm('Submit hook works!');
 }
 
 
@@ -24,10 +30,6 @@ function insightly_drupal_help($path, $arg){
 	}
 }
 
-function insightly_drupal_block_info(){
- $blocks['insightly_drupal']=array('info'=>'Test Block for Integration');
- return $blocks;
-}
 
 
 
