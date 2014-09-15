@@ -1,15 +1,28 @@
 <?php
 
-function insightly_drupal_form_entityform_edit_form_alter(&$form, &$form_state) {
- dpm("moi");
 
+$my_form;
+
+function insightly_drupal_form_entityform_edit_form_alter(&$form, &$form_state) {
+ //dpm($form);
+
+ global $my_form;
+ $my_form=$form;
+ //dpm($my_form);
  $form['actions']['submit']['#submit'] = array('entityform_edit_form_submit','insightly_drupal_submithook');
  //dpm($form);
 }
 
 
 function insightly_drupal_submithook(){
- dpm('Submit hook works!');
+ global $my_form;
+ dpm($my_form);
+
+ //$last_name=field_get_items('node',$my_form,'field_last_name');
+ //dpm($last_name);
+ 
+ //$last_name = field_get_items('node','contact','field_last_name');
+ //dpm($last_name);
 }
 
 
