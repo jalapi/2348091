@@ -30,18 +30,17 @@ function insightly_drupal_submithook(){
  $date=date('d.m.Y H:i:s e');
 
  
- $contact='	<Contact xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/Insightly.API">
- 		<CONTACTINFOS>
-			<ContactInfo>
-				<CONTACT_INFO_ID>1</CONTACT_INFO_ID>
-				<DETAIL>'.$phone_number.'</DETAIL>
-				<TYPE>"Phone"</TYPE>
-			</ContactInfo>
-		</CONTACTINFOS>
-		<DATE_CREATED_UTC>'.$date.'</DATE_CREATED_UTC>
-		<FIRST_NAME>'.$first_name.'</FIRST_NAME>
-		<LAST_NAME>'.$last_name.'</LAST_NAME>
-	</Contact>';
+ $contact='{
+	"CONTACT_INFOS" : [
+		{
+			"DETAIL": "'.$phone_number.'",
+			"TYPE": "Phone"
+		}
+	],
+	"DATE_CREATED_UTC": "'.$date.'",
+	"FIRST_NAME": "'.$first_name.'",
+	"LAST_NAME": "'.$last_name.'",
+}';
 
  dpm($contact);
  
