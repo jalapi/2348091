@@ -18,7 +18,13 @@ function insightly_drupal_submithook(){
  global $my_form;
  dpm($my_form);
 
- //$last_name=field_get_items('node',$my_form,'field_last_name');
+ $last_name=$my_form['#entity']->field_last_name['und'][0]['value'];
+ $first_name=$my_form['#entity']->field_first_name['und'][0]['value'];
+ $phone_number=$my_form['#entity']->field_phone_number['und'][0]['value']; 
+
+ dpm("last name : ".$last_name);
+ dpm("first name : ".$first_name);
+ dpm("phone number : ".$phone_number);
  //dpm($last_name);
  
  //$last_name = field_get_items('node','contact','field_last_name');
