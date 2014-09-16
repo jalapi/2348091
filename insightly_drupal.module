@@ -4,31 +4,21 @@
 $my_form;
 
 function insightly_drupal_form_entityform_edit_form_alter(&$form, &$form_state) {
- //dpm($form);
-
  global $my_form;
  $my_form=$form;
- //dpm($my_form);
  $form['actions']['submit']['#submit'] = array('entityform_edit_form_submit','insightly_drupal_submithook');
- //dpm($form);
 }
 
 
 function insightly_drupal_submithook(){
  global $my_form;
- dpm($my_form);
 
  $last_name=$my_form['#entity']->field_last_name['und'][0]['value'];
  $first_name=$my_form['#entity']->field_first_name['und'][0]['value'];
  $phone_number=$my_form['#entity']->field_phone_number['und'][0]['value']; 
 
- dpm("last name : ".$last_name);
- dpm("first name : ".$first_name);
- dpm("phone number : ".$phone_number);
-
  date_default_timezone_set('UTC');
  $date=date('d.m.Y H:i:s e');
-
  
  $contact='{
 	"CONTACT_INFOS" : [
@@ -46,28 +36,6 @@ function insightly_drupal_submithook(){
  
 
 
-//dpm($last_name);
- 
- //$last_name = field_get_items('node','contact','field_last_name');
- //dpm($last_name);
-}
-
-
-
-
-
-
-
-//Useless tests from this point onwards, can be removed
-function insightly_drupal_help($path, $arg){
-	switch ($path){
-		case "admin/help#insightly_drupal":
-			//$var='seppo';
-			//dpm('paavo');
-			//dpm($var);
-			return 'This is the help text for Insightly Integration for Drupal module.';
-			break;
-	}
 }
 
 
