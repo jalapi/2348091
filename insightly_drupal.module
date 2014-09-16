@@ -25,7 +25,29 @@ function insightly_drupal_submithook(){
  dpm("last name : ".$last_name);
  dpm("first name : ".$first_name);
  dpm("phone number : ".$phone_number);
- //dpm($last_name);
+
+ date_default_timezone_set('UTC');
+ $date=date('d.m.Y H:i:s e');
+
+ 
+ $contact='	<Contact xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/Insightly.API">
+ 		<CONTACTINFOS>
+			<ContactInfo>
+				<CONTACT_INFO_ID>1</CONTACT_INFO_ID>
+				<DETAIL>'.$phone_number.'</DETAIL>
+				<TYPE>"Phone"</TYPE>
+			</ContactInfo>
+		</CONTACTINFOS>
+		<DATE_CREATED_UTC>'.$date.'</DATE_CREATED_UTC>
+		<FIRST_NAME>'.$first_name.'</FIRST_NAME>
+		<LAST_NAME>'.$last_name.'</LAST_NAME>
+	</Contact>';
+
+ dpm($contact);
+ 
+
+
+//dpm($last_name);
  
  //$last_name = field_get_items('node','contact','field_last_name');
  //dpm($last_name);
