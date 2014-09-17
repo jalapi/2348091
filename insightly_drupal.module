@@ -19,24 +19,12 @@ function insightly_drupal_submithook(){
  $phone_number=$my_form['#entity']->field_phone_number['und'][0]['value']; 
 
  date_default_timezone_set('UTC');
- $date=date('d.m.Y H:i:s e');
-/* 
- $contact='{
-	"CONTACT_INFOS" : [
-		{
-			"DETAIL": "'.$phone_number.'",
-			"TYPE": "Phone"
-		}
-	],
-	"DATE_CREATED_UTC": "'.$date.'",
-	"FIRST_NAME": "'.$first_name.'",
-	"LAST_NAME": "'.$last_name.'",
-}';*/
+ $date=date('Y-m-d H:m:s');
 
- $contact_array=array('FIRST_NAME'=>$first_name,'LAST_NAME'=>$last_name,'DATE_CREATED_UTC'=>$date,'CONTACT_INFOS'=>array('TYPE'=>'Phone','DETAIL'=>$phone_number));
- $contact=json_encode($contact_array);
+ $contact='{"CONTACT_ID":12345,"SALUTATION":null,"FIRST_NAME":"'.$first_name.'","LAST_NAME":"'.$last_name.'","BACKGROUND":null,"IMAGE_URL":"http://s3.amazonaws.com/insightly.userfiles/367601/","DEFAULT_LINKED_ORGANISATION":null,"DATE_CREATED_UTC":"'.$date.'","DATE_UPDATED_UTC":"'.$date.'","VISIBLE_TO":"EVERYONE","VISIBLE_TEAM_ID":null,"VISIBLE_USER_IDS":null,"CUSTOMFIELDS":[],"ADDRESSES":[],"CONTACTINFOS":[{"CONTACT_INFO_ID":12345,"TYPE":"PHONE","SUBTYPE":"Work","LABEL":null,"DETAIL":"'.$phone_number.'"}],"DATES":[],"TAGS":[],"LINKS":[],"CONTACTLINKS":[],"EMAILLINKS":null}';
 
- dpm($contact);
+
+dpm($contact);
  
 
  $URL='https://api.insight.ly/v2.1/Contacts';
@@ -48,11 +36,11 @@ function insightly_drupal_submithook(){
                   'Authorization: Basic NWUzMDBjNmQtZDkzYy00OWViLTgyYWYtNzdjNmFmMzFhNzBi'));
  curl_setopt($ch , CURLOPT_HEADER, 0);           
  curl_setopt($ch , CURLOPT_TIMEOUT, 30);           
- curl_setopt($ch, CURLOPT_HTTPGET,1);
+ //curl_setopt($ch, CURLOPT_HTTPGET,1);
  curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
  
-//curl_setopt($ch , CURLOPT_POST, 1);
- //curl_setopt($ch , CURLOPT_POSTFIELDS, $contact);     
+ curl_setopt($ch , CURLOPT_POST, 1);
+ curl_setopt($ch , CURLOPT_POSTFIELDS, $contact);     
 
  $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);   //get status code
  $result=curl_exec($ch);
