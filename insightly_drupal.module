@@ -39,29 +39,25 @@ function insightly_drupal_submithook(){
  dpm($contact);
  
 
- $uncoded_username='5e300c6d-d93c-49eb-82af-77c6af31a70b';
- $username=base64_encode($uncoded_username);
- $password='';
  $URL='https://api.insight.ly/v2.1/Contacts';
-
  $ch = curl_init($URL);
 
-curl_setopt($ch, 
+ curl_setopt($ch, 
             CURLOPT_HTTPHEADER, 
             array('Content-Type: application/json', 
                   'Authorization: Basic NWUzMDBjNmQtZDkzYy00OWViLTgyYWYtNzdjNmFmMzFhNzBi'));
-curl_setopt($ch , CURLOPT_HEADER, 0);           
-curl_setopt($ch , CURLOPT_TIMEOUT, 30);           
-curl_setopt($ch, CURLOPT_HTTPGET,1);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+ curl_setopt($ch , CURLOPT_HEADER, 0);           
+ curl_setopt($ch , CURLOPT_TIMEOUT, 30);           
+ curl_setopt($ch, CURLOPT_HTTPGET,1);
+ curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+ 
 //curl_setopt($ch , CURLOPT_POST, 1);
-//curl_setopt($ch , CURLOPT_POSTFIELDS, $contact);     
+ //curl_setopt($ch , CURLOPT_POSTFIELDS, $contact);     
 
  $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);   //get status code
  $result=curl_exec($ch);
  $c_error=curl_error($ch);
 
- dpm($username);
  dpm($result);
  dpm('Curl error : '.$c_error);
  if ($c_error==""){dpm("No error");}
