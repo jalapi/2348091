@@ -48,7 +48,6 @@ function insightly_drupal_submithook(){
  //curl_setopt($ch , CURLOPT_POST, 1);
  //curl_setopt($ch , CURLOPT_POSTFIELDS, $contact);     
 
- $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);   //get status code
  $result=curl_exec($ch);
  $c_error=curl_error($ch);
 
