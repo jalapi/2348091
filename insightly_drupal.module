@@ -2,62 +2,63 @@
 
 $my_form;
 
+/**
+
+*/ 
 function insightly_drupal_form_entityform_edit_form_alter(&$form, &$form_state) {
- 
- global $my_form;
- $my_form=$form;
- $form['actions']['submit']['#submit'] = array('entityform_edit_form_submit','insightly_drupal_submithook');
+  global $my_form; $my_form=$form;
+  $form['actions']['submit']['#submit'] = array('entityform_edit_form_submit', 'insightly_drupal_submithook');
 }
 
+/**
 
-function insightly_drupal_submithook(){
- global $my_form;
 
- $lang=$my_form['field_last_name']['#language'];
- $last_name=$my_form['#entity']->field_last_name[$lang][0]['value'];
- $first_name=$my_form['#entity']->field_first_name[$lang][0]['value'];
- $phone_number=$my_form['#entity']->field_phone_number[$lang][0]['value']; 
+*/
+function insightly_drupal_submithook() {
+  global $my_form;
 
- date_default_timezone_set('UTC');
- $date=date('Y-m-d H:m:s');
+  $lang = $my_form['field_last_name']['#language'];
+  $last_name = $my_form['#entity']->field_last_name[$lang][0]['value'];
+  $first_name = $my_form['#entity']->field_first_name[$lang][0]['value'];
+  $phone_number = $my_form['#entity']->field_phone_number[$lang][0]['value']; 
 
- $contact='{"CONTACT_ID":123456,"SALUTATION":null,"FIRST_NAME":"'.$first_name.'","LAST_NAME":"'.$last_name.'","BACKGROUND":null,"IMAGE_URL":"http://s3.amazonaws.com/insightly.userfiles/367601/","DEFAULT_LINKED_ORGANISATION":null,"DATE_CREATED_UTC":"'.$date.'","DATE_UPDATED_UTC":"'.$date.'","VISIBLE_TO":"EVERYONE","VISIBLE_TEAM_ID":null,"VISIBLE_USER_IDS":null,"CUSTOMFIELDS":[],"ADDRESSES":[],"CONTACTINFOS":[{"CONTACT_INFO_ID":12345,"TYPE":"PHONE","SUBTYPE":"Work","LABEL":null,"DETAIL":"'.$phone_number.'"}],"DATES":[],"TAGS":[],"LINKS":[],"CONTACTLINKS":[],"EMAILLINKS":null}';
+  date_default_timezone_set('UTC');
+  $date = date('Y-m-d H:m:s');
 
- dpm($my_form);
- dpm($contact);
- 
+  $contact = '{"CONTACT_ID":123456,"SALUTATION":null,"FIRST_NAME":"' . $first_name . '","LAST_NAME":"' . $last_name . '","BACKGROUND":null,"IMAGE_URL":"http://s3.amazonaws.com/insightly.userfiles/367601/","DEFAULT_LINKED_ORGANISATION":null,"DATE_CREATED_UTC":"' . $date . '","DATE_UPDATED_UTC":"' . $date . '","VISIBLE_TO":"EVERYONE","VISIBLE_TEAM_ID":null,"VISIBLE_USER_IDS":null,"CUSTOMFIELDS":[],"ADDRESSES":[],"CONTACTINFOS":[{"CONTACT_INFO_ID":12345,"TYPE":"PHONE","SUBTYPE":"Work","LABEL":null,"DETAIL":"' . $phone_number . '"}],"DATES":[],"TAGS":[],"LINKS":[],"CONTACTLINKS":[],"EMAILLINKS":null}';
 
- $URL='https://api.insight.ly/v2.1/Contacts';
- $ch = curl_init($URL);
+  dpm($my_form);
+  dpm($contact); 
 
- $user='5e300c6d-d93c-49eb-82af-77c6af31a70b';
- $user=base64_encode($user);
+  $URL = 'https://api.insight.ly/v2.1/Contacts';
+  $ch = curl_init($URL);
 
- curl_setopt($ch, 
+  $user = '5e300c6d-d93c-49eb-82af-77c6af31a70b';
+  $user = base64_encode($user);
+
+  curl_setopt($ch, 
             CURLOPT_HTTPHEADER, 
             array('Content-Type: application/json', 
-                  'Authorization: Basic '.$user));
- curl_setopt($ch , CURLOPT_HEADER, 0);           
- curl_setopt($ch , CURLOPT_TIMEOUT, 30);           
- curl_setopt($ch, CURLOPT_HTTPGET,1);
- curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
- 
- //curl_setopt($ch , CURLOPT_POST, 1);
- //curl_setopt($ch , CURLOPT_POSTFIELDS, $contact);     
+                  'Authorization: Basic ' . $user));
+  curl_setopt($ch, CURLOPT_HEADER, 0);           
+  curl_setopt($ch, CURLOPT_TIMEOUT, 30);           
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
- $result=curl_exec($ch);
- $c_error=curl_error($ch);
-
- dpm($result);
- dpm('Curl error : '.$c_error);
- if ($c_error==""){dpm("No error");}
-
+  //Enable this line to GET contacts instead of POSTing
+  curl_setopt($ch, CURLOPT_HTTPGET, 1); 
   
+  //Enable these two lines to POST the contacts instead of GETting
+  //curl_setopt($ch, CURLOPT_POST, 1);
+  //curl_setopt($ch, CURLOPT_POSTFIELDS, $contact);     
+
+  $result = curl_exec($ch);
+  $c_error = curl_error($ch);
+
+  dpm($result);
+  dpm('Curl error : '.$c_error);
+  if ($c_error==""){dpm("No error");}
 
  curl_close($ch);
-
-
-
 }
 
 
