@@ -1,6 +1,5 @@
 <?php
 
-
 $my_form;
 
 function insightly_drupal_form_entityform_edit_form_alter(&$form, &$form_state) {
@@ -14,9 +13,7 @@ function insightly_drupal_form_entityform_edit_form_alter(&$form, &$form_state) 
 function insightly_drupal_submithook(){
  global $my_form;
 
-
  $lang=$my_form['field_last_name']['#language'];
-
  $last_name=$my_form['#entity']->field_last_name[$lang][0]['value'];
  $first_name=$my_form['#entity']->field_first_name[$lang][0]['value'];
  $phone_number=$my_form['#entity']->field_phone_number[$lang][0]['value']; 
@@ -24,7 +21,7 @@ function insightly_drupal_submithook(){
  date_default_timezone_set('UTC');
  $date=date('Y-m-d H:m:s');
 
- $contact='{"CONTACT_ID":12345,"SALUTATION":null,"FIRST_NAME":"'.$first_name.'","LAST_NAME":"'.$last_name.'","BACKGROUND":null,"IMAGE_URL":"http://s3.amazonaws.com/insightly.userfiles/367601/","DEFAULT_LINKED_ORGANISATION":null,"DATE_CREATED_UTC":"'.$date.'","DATE_UPDATED_UTC":"'.$date.'","VISIBLE_TO":"EVERYONE","VISIBLE_TEAM_ID":null,"VISIBLE_USER_IDS":null,"CUSTOMFIELDS":[],"ADDRESSES":[],"CONTACTINFOS":[{"CONTACT_INFO_ID":12345,"TYPE":"PHONE","SUBTYPE":"Work","LABEL":null,"DETAIL":"'.$phone_number.'"}],"DATES":[],"TAGS":[],"LINKS":[],"CONTACTLINKS":[],"EMAILLINKS":null}';
+ $contact='{"CONTACT_ID":123456,"SALUTATION":null,"FIRST_NAME":"'.$first_name.'","LAST_NAME":"'.$last_name.'","BACKGROUND":null,"IMAGE_URL":"http://s3.amazonaws.com/insightly.userfiles/367601/","DEFAULT_LINKED_ORGANISATION":null,"DATE_CREATED_UTC":"'.$date.'","DATE_UPDATED_UTC":"'.$date.'","VISIBLE_TO":"EVERYONE","VISIBLE_TEAM_ID":null,"VISIBLE_USER_IDS":null,"CUSTOMFIELDS":[],"ADDRESSES":[],"CONTACTINFOS":[{"CONTACT_INFO_ID":12345,"TYPE":"PHONE","SUBTYPE":"Work","LABEL":null,"DETAIL":"'.$phone_number.'"}],"DATES":[],"TAGS":[],"LINKS":[],"CONTACTLINKS":[],"EMAILLINKS":null}';
 
  dpm($my_form);
  dpm($contact);
