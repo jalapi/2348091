@@ -92,14 +92,16 @@ function insightly_drupal_form($form, &$form_state) {
   $form['insightly_drupal_apikey'] = array(
     '#type' => 'textfield',
     '#title' => t('Your Insight.ly API key'),
-    '#default_value' => 3,
+    '#default_value' => variable_get('insightly_drupal_apikey', 3),
     '#size' => 60,
     '#maxlength' => 60,
     'description' => t('Your Insight.ly API key used in authentication.'),
     '#required' => TRUE,
   );
-  //return system_settings_form($form);
+  $form2=system_settings_form($form);
+  return system_settings_form($form);
   dpm($form);
+  dpm($form2);
 
 }
 
