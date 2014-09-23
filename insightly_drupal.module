@@ -66,5 +66,51 @@ function insightly_drupal_submithook() {
 }
 
 
+/**
+ * Calls the Configure form 
+ *
+ *
+ */
+function insightly_drupal_menu() {
+  $items = array();
+  $items['admin/config/content/insightly_drupal'] = array(
+    'title' => 'Insightly Integration for Drupal',
+    'description' => 'Configuration for Insightly Integration for Drupal module',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('insightly_drupal_form'),
+    'access arguments' => array('access administration pages'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+/**
+ *
+ *
+ */
+function insightly_drupal_form($form, &$form_state) {
+  $form['insightly_drupal_apikey'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Your Insight.ly API key'),
+    '#default_value' => 3,
+    '#size' => 60,
+    '#maxlength' => 60,
+    'description' => t('Your Insight.ly API key used in authentication.'),
+    '#required' => TRUE,
+  );
+  //return system_settings_form($form);
+  dpm($form);
+
+}
+
+
+
+
+
+
+
+
+
+
 
 
