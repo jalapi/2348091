@@ -99,11 +99,13 @@ function insightly_drupal_form($form, &$form_state) {
     '#description' => t('Your Insight.ly API key used in authentication.'),
     '#required' => TRUE,
   );
-  $form2=system_settings_form($form);
+  $form['insightly_drupal_chosen_fields'] = array(
+    '#type' => 'checkboxes',
+    '#options' => drupal_map_assoc(array(t('Last Name'), t('First Name'), t('Email'), t('Phone Number'))),
+    '#title' => t('Fields sent to Insight.ly'),
+    '#default_value' => variable_get('insightly_drupal_chosen_fields', array(t('Last Name'), t('First Name'), t('Email'), t('Phone Number'))),
+  );
   return system_settings_form($form);
-  dpm($form);
-  dpm($form2);
-
 }
 
 
