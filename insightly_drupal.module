@@ -1,9 +1,4 @@
 <?php
-
-error_reporting(E_ALL);
-ini_set('display_errors', TRUE);
-ini_set('display_startup_errors', TRUE);
-
 $my_form;
 
 /**
@@ -35,13 +30,15 @@ function insightly_drupal_submithook() {
 
   $contact = '{"CONTACT_ID":123456,"SALUTATION":null,"FIRST_NAME":"' . $first_name . '","LAST_NAME":"' . $last_name . '","BACKGROUND":null,"IMAGE_URL":"http://s3.amazonaws.com/insightly.userfiles/367601/","DEFAULT_LINKED_ORGANISATION":null,"DATE_CREATED_UTC":"' . $date . '","DATE_UPDATED_UTC":"' . $date . '","VISIBLE_TO":"EVERYONE","VISIBLE_TEAM_ID":null,"VISIBLE_USER_IDS":null,"CUSTOMFIELDS":[],"ADDRESSES":[],"CONTACTINFOS":[{"CONTACT_INFO_ID":12345,"TYPE":"PHONE","SUBTYPE":"Work","LABEL":null,"DETAIL":"' . $phone_number . '"}],"DATES":[],"TAGS":[],"LINKS":[],"CONTACTLINKS":[],"EMAILLINKS":null}';
 
-  dpm($my_form);
   dpm($contact); 
 
   $URL = 'https://api.insight.ly/v2.1/Contacts';
   $ch = curl_init($URL);
 
-  $user = '5e300c6d-d93c-49eb-82af-77c6af31a70b';
+  $user = variable_get('insightly_drupal_apikey', 0);
+  if ($user == 0) {
+    //API key not set, handle error
+  }
   $user = base64_encode($user);
 
   curl_setopt($ch, 
