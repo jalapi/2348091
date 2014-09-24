@@ -1,5 +1,5 @@
 <?php
-// Global variable used to transfer the form
+// Global variable used to transfer the form to the hook
 $my_form;
 
 /**
@@ -39,7 +39,7 @@ function insightly_drupal_submithook() {
   date_default_timezone_set('UTC');
   $date = date('Y-m-d H:m:s');
 
-  $contact = '{"CONTACT_ID":123456,"SALUTATION":null,"FIRST_NAME":"' . $first_name . '","LAST_NAME":"' . $last_name . '","BACKGROUND":null,"IMAGE_URL":"http://s3.amazonaws.com/insightly.userfiles/367601/","DEFAULT_LINKED_ORGANISATION":null,"DATE_CREATED_UTC":"' . $date . '","DATE_UPDATED_UTC":"' . $date . '","VISIBLE_TO":"EVERYONE","VISIBLE_TEAM_ID":null,"VISIBLE_USER_IDS":null,"CUSTOMFIELDS":[],"ADDRESSES":[],"CONTACTINFOS":[{"CONTACT_INFO_ID":12345,"TYPE":"PHONE","SUBTYPE":"Work","LABEL":null,"DETAIL":"' . $phone_number . '"}, {"CONTACT_INFO_ID":123456,"TYPE":"EMAIL","SUBTYPE":"Work","LABEL":null,"DETAIL":"'   . $email_address . '"}],"DATES":[],"TAGS":[],"LINKS":[],"CONTACTLINKS":[],"EMAILLINKS":null}';
+  $contact = '{"CONTACT_ID":0,"SALUTATION":null,"FIRST_NAME":"' . $first_name . '","LAST_NAME":"' . $last_name . '","BACKGROUND":null,"IMAGE_URL":"http://s3.amazonaws.com/insightly.userfiles/367601/","DEFAULT_LINKED_ORGANISATION":null,"DATE_CREATED_UTC":"' . $date . '","DATE_UPDATED_UTC":"' . $date . '","VISIBLE_TO":"EVERYONE","VISIBLE_TEAM_ID":null,"VISIBLE_USER_IDS":null,"CUSTOMFIELDS":[],"ADDRESSES":[],"CONTACTINFOS":[{"CONTACT_INFO_ID":0,"TYPE":"PHONE","SUBTYPE":"Work","LABEL":null,"DETAIL":"' . $phone_number . '"}, {"CONTACT_INFO_ID":0,"TYPE":"EMAIL","SUBTYPE":"Work","LABEL":null,"DETAIL":"'   . $email_address . '"}],"DATES":[],"TAGS":[],"LINKS":[],"CONTACTLINKS":[],"EMAILLINKS":null}';
 
   dpm($contact); 
 
@@ -60,7 +60,7 @@ function insightly_drupal_submithook() {
   curl_setopt($ch, CURLOPT_TIMEOUT, 30);           
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-  //Enable this line to GET contacts instead of POSTing
+  //Enable this line to GET contacts instead of POSTing (good for debugging)
   //curl_setopt($ch, CURLOPT_HTTPGET, 1); 
   
   //Enable these two lines to POST the contacts instead of GETting
