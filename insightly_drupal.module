@@ -2,8 +2,6 @@
 // Global variable used to transfer the form to the hook
 $my_form;
 
-//unimportant comment
-
 /**
  * Adds the submit hook to the form.
  *
@@ -49,7 +47,7 @@ function insightly_drupal_submithook() {
 
   $user = variable_get('insightly_drupal_apikey', 0);
   if ($user == 0) {
-    //API key not set, handle error
+    watchdog('insightly_drupal', 'API key not set!');
   }
   $user = base64_encode($user);
 
