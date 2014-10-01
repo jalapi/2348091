@@ -2,6 +2,8 @@
 // Global variable used to transfer the form to the hook
 $my_form;
 
+//unimportant comment
+
 /**
  * Adds the submit hook to the form.
  *
