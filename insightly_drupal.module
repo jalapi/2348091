@@ -1,13 +1,13 @@
 <?php
 
-// Global variable used to transfer the form to the hook
-$my_form;
+// Global variable used to transfer the form to the hook.
+$_insightly_drupal_form;
 
 /**
  * Adds the submit hook to the form.
- */ 
+ */
 function insightly_drupal_form_entityform_edit_form_alter(&$form, &$form_state) {
-  global $my_form; $my_form=$form;
+  global $_insightly_drupal_form; $_insightly_drupal_form = $form;
   $form['actions']['submit']['#submit'] = array('entityform_edit_form_submit', 'insightly_drupal_submithook');
 }
 
@@ -15,22 +15,38 @@ function insightly_drupal_form_entityform_edit_form_alter(&$form, &$form_state) 
  * Sends the data from the form to Insightly.
  */
 function insightly_drupal_submithook() {
-  global $my_form;
-  
-  $chosen_fields=variable_get('insightly_drupal_chosen_fields', 0);
-  $lang = $my_form['field_last_name']['#language'];
+  global $_insightly_drupal_form;
 
-  if ($chosen_fields['Last Name'] !== 0) { $last_name = $my_form['#entity']->field_last_name[$lang][0]['value']; }
-  else { $last_name = 'N/A'; }
+  $chosen_fields = variable_get('insightly_drupal_chosen_fields', 0);
+  $lang = $_insightly_drupal_form['field_last_name']['#language'];
 
-  if ($chosen_fields['First Name'] !== 0) { $first_name = $my_form['#entity']->field_first_name[$lang][0]['value']; }
-  else { $first_name = 'N/A'; }
+  if ($chosen_fields['Last Name'] !== 0) {
+    $last_name = $_insightly_drupal_form['#entity']->field_last_name[$lang][0]['value'];
+  }
+  else {
+    $last_name = 'N/A';
+  }
 
-  if ($chosen_fields['Phone Number'] !== 0) { $phone_number = $my_form['#entity']->field_phone_number[$lang][0]['value']; }
-  else { $phone_number = 'N/A'; }
+  if ($chosen_fields['First Name'] !== 0) {
+    $first_name = $_insightly_drupal_form['#entity']->field_first_name[$lang][0]['value'];
+  }
+  else {
+    $first_name = 'N/A';
+  }
 
-  if ($chosen_fields['Email'] !== 0) { $email_address = $my_form['#entity']->field_email_address[$lang][0]['value']; }
-  else { $email_address = 'N/A'; }
+  if ($chosen_fields['Phone Number'] !== 0) {
+    $phone_number = $_insightly_drupal_form['#entity']->field_phone_number[$lang][0]['value'];
+  }
+  else {
+    $phone_number = 'N/A';
+  }
+
+  if ($chosen_fields['Email'] !== 0) {
+    $email_address = $_insightly_drupal_form['#entity']->field_email_address[$lang][0]['value'];
+  }
+  else {
+    $email_address = 'N/A';
+  }
 
   date_default_timezone_set('UTC');
   $date = date('Y-m-d H:m:s');
