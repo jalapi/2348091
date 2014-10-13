@@ -104,7 +104,7 @@ function insightly_drupal_menu() {
     'description' => 'Configuration for Insightly Integration for Drupal module',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('insightly_drupal_form'),
-    'access arguments' => array('access administration pages'),
+    'access arguments' => array('administer site configuration'),
     'type' => MENU_NORMAL_ITEM,
   );
   return $items;
