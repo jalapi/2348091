@@ -4,7 +4,7 @@
  * Global variable used to transfer the form to the hook.
  */
 
-$_insightly_drupal_form;
+$_insightly_drupal_form=0;
 
 /**
  * Adds the submit hook to the form.
