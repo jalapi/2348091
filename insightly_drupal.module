@@ -10,8 +10,11 @@ $_insightly_drupal_form = 0;
  * Adds the submit hook to the form.
  */
 function insightly_drupal_form_entityform_edit_form_alter(&$form, &$form_state) {
-  global $_insightly_drupal_form; $_insightly_drupal_form = $form;
-  $form['actions']['submit']['#submit'] = array('entityform_edit_form_submit', 'insightly_drupal_submithook');
+  $chosen_forms = variable_get('insightly_drupal_chosen_forms');
+  if ($chosen_forms[$form['#bundle']] !== 0) {
+    global $_insightly_drupal_form; $_insightly_drupal_form = $form;
+    $form['actions']['submit']['#submit'] = array('entityform_edit_form_submit', 'insightly_drupal_submithook');
+  }
 }
 
 /**
@@ -102,6 +105,9 @@ function insightly_drupal_menu() {
  * Settings form.
  */
 function insightly_drupal_form($form, &$form_state) {
+  $info = entity_get_info('entityform');
+  $keys = array_keys($info['bundles']);
+
   $form['insightly_drupal_apikey'] = array(
     '#type' => 'textfield',
     '#title' => t('Your Insight.ly API key'),
@@ -118,13 +124,19 @@ function insightly_drupal_form($form, &$form_state) {
       t('First Name'),
       t('Email'),
       t('Phone Number'))),
-    '#title' => t('Fields sent to Insight.ly'),
+    '#title' => t('Select the fields to be sent to Insight.ly.'),
     '#default_value' => variable_get('insightly_drupal_chosen_fields', array(
       t('Last Name'),
       t('First Name'),
       t('Email'),
       t('Phone Number'))),
     '#required' => TRUE,
+  );
+  $form['insightly_drupal_chosen_forms'] = array(
+    '#type' => 'checkboxes',
+    '#options' => drupal_map_assoc($keys),
+    '#title' => 'Select the forms where Insightly Integration for Drupal is used.',
+    '#default_value' => variable_get('insightly_drupal_chosen_forms', $keys),      
   );
   return system_settings_form($form);
 }
