@@ -1,6 +1,8 @@
 <?php
 
-// Global variable used to transfer the form to the hook.
+/**
+ * Global variable used to transfer the form to the hook.
+ */
 $_insightly_drupal_form;
 
 /**
@@ -53,10 +55,10 @@ function insightly_drupal_submithook() {
 
   $contact = '{"CONTACT_ID":0,"SALUTATION":null,"FIRST_NAME":"' . $first_name . '","LAST_NAME":"' . $last_name . '","BACKGROUND":null,"IMAGE_URL":"http://s3.amazonaws.com/insightly.userfiles/367601/","DEFAULT_LINKED_ORGANISATION":null,"DATE_CREATED_UTC":"' . $date . '","DATE_UPDATED_UTC":"' . $date . '","VISIBLE_TO":"EVERYONE","VISIBLE_TEAM_ID":null,"VISIBLE_USER_IDS":null,"CUSTOMFIELDS":[],"ADDRESSES":[],"CONTACTINFOS":[{"CONTACT_INFO_ID":0,"TYPE":"PHONE","SUBTYPE":"Work","LABEL":null,"DETAIL":"' . $phone_number . '"}, {"CONTACT_INFO_ID":0,"TYPE":"EMAIL","SUBTYPE":"Work","LABEL":null,"DETAIL":"'   . $email_address . '"}],"DATES":[],"TAGS":[],"LINKS":[],"CONTACTLINKS":[],"EMAILLINKS":null}';
 
-  dpm($contact); 
+  dpm($contact);
 
-  $URL = 'https://api.insight.ly/v2.1/Contacts';
-  $ch = curl_init($URL);
+  $url = 'https://api.insight.ly/v2.1/Contacts';
+  $ch = curl_init($url);
 
   $user = variable_get('insightly_drupal_apikey', 0);
   if ($user == 0) {
@@ -64,20 +66,20 @@ function insightly_drupal_submithook() {
   }
   $user = base64_encode($user);
 
-  curl_setopt($ch, 
-            CURLOPT_HTTPHEADER, 
-            array('Content-Type: application/json', 
+  curl_setopt($ch,
+            CURLOPT_HTTPHEADER,
+            array('Content-Type: application/json',
                   'Authorization: Basic ' . $user));
-  curl_setopt($ch, CURLOPT_HEADER, 0);           
-  curl_setopt($ch, CURLOPT_TIMEOUT, 30);           
+  curl_setopt($ch, CURLOPT_HEADER, 0);
+  curl_setopt($ch, CURLOPT_TIMEOUT, 30);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-  //Enable this line to GET contacts instead of POSTing (good for debugging)
+  //Enable this line to GET contacts instead of POSTing (good for debugging).
   //curl_setopt($ch, CURLOPT_HTTPGET, 1); 
   
-  //Enable these two lines to POST the contacts instead of GETting
+  //Enable these two lines to POST the contacts instead of GETting.
   curl_setopt($ch, CURLOPT_POST, 1);
-  curl_setopt($ch, CURLOPT_POSTFIELDS, $contact);     
+  curl_setopt($ch, CURLOPT_POSTFIELDS, $contact);
 
   $result = curl_exec($ch);
   $c_error = curl_error($ch);
