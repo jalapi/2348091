@@ -76,8 +76,8 @@ function insightly_drupal_submithook() {
   curl_setopt($ch, CURLOPT_POST, 1);
   curl_setopt($ch, CURLOPT_POSTFIELDS, $contact);
 
-  $result = curl_exec($ch);
-  $c_error = curl_error($ch);
+  curl_exec($ch);
+  curl_error($ch);
 
   curl_close($ch);
 }
@@ -102,8 +102,6 @@ function insightly_drupal_menu() {
  * Settings form.
  */
 function insightly_drupal_form($form, &$form_state) {
-  dpm("moi");
-  dpm(entity_get_info('EntityForm'));
   $form['insightly_drupal_apikey'] = array(
     '#type' => 'textfield',
     '#title' => t('Your Insight.ly API key'),
