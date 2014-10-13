@@ -3,6 +3,7 @@
 /**
  * Global variable used to transfer the form to the hook.
  */
+
 $_insightly_drupal_form;
 
 /**
@@ -67,17 +68,17 @@ function insightly_drupal_submithook() {
   $user = base64_encode($user);
 
   curl_setopt($ch,
-            CURLOPT_HTTPHEADER,
-            array('Content-Type: application/json',
-                  'Authorization: Basic ' . $user));
+    CURLOPT_HTTPHEADER,
+    array('Content-Type: application/json',
+      'Authorization: Basic ' . $user));
   curl_setopt($ch, CURLOPT_HEADER, 0);
   curl_setopt($ch, CURLOPT_TIMEOUT, 30);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-  //Enable this line to GET contacts instead of POSTing (good for debugging).
-  //curl_setopt($ch, CURLOPT_HTTPGET, 1); 
-  
-  //Enable these two lines to POST the contacts instead of GETting.
+  // Enable this line to GET contacts instead of POSTing (good for debugging).
+  // curl_setopt($ch, CURLOPT_HTTPGET, 1);
+
+  // Enable these two lines to POST the contacts instead of GETting.
   curl_setopt($ch, CURLOPT_POST, 1);
   curl_setopt($ch, CURLOPT_POSTFIELDS, $contact);
 
@@ -85,8 +86,10 @@ function insightly_drupal_submithook() {
   $c_error = curl_error($ch);
 
   dpm($result);
-  dpm('Curl error : '.$c_error);
-  if ($c_error==""){dpm("No error");}
+  dpm('Curl error : ' . $c_error);
+  if ($c_error == ""){
+    dpm("No error");
+  }
 
  curl_close($ch);
 }
