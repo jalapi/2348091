@@ -87,18 +87,15 @@ function insightly_drupal_submithook() {
 
   dpm($result);
   dpm('Curl error : ' . $c_error);
-  if ($c_error == ""){
+  if ($c_error == "") {
     dpm("No error");
   }
 
- curl_close($ch);
+  curl_close($ch);
 }
 
-
 /**
- * Calls the Configure form 
- *
- *
+ * Calls the Configure form.
  */
 function insightly_drupal_menu() {
   $items = array();
@@ -114,8 +111,7 @@ function insightly_drupal_menu() {
 }
 
 /**
- *
- *
+ * Settings form.
  */
 function insightly_drupal_form($form, &$form_state) {
   $form['insightly_drupal_apikey'] = array(
@@ -136,15 +132,3 @@ function insightly_drupal_form($form, &$form_state) {
   );
   return system_settings_form($form);
 }
-
-
-
-
-
-
-
-
-
-
-
-
