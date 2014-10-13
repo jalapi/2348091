@@ -1,11 +1,10 @@
 <?php
+
 // Global variable used to transfer the form to the hook
 $my_form;
 
 /**
  * Adds the submit hook to the form.
- *
- *
  */ 
 function insightly_drupal_form_entityform_edit_form_alter(&$form, &$form_state) {
   global $my_form; $my_form=$form;
@@ -14,8 +13,6 @@ function insightly_drupal_form_entityform_edit_form_alter(&$form, &$form_state) 
 
 /**
  * Sends the data from the form to Insightly.
- *
- *
  */
 function insightly_drupal_submithook() {
   global $my_form;
