@@ -125,9 +125,17 @@ function insightly_drupal_form($form, &$form_state) {
   );
   $form['insightly_drupal_chosen_fields'] = array(
     '#type' => 'checkboxes',
-    '#options' => drupal_map_assoc(array(t('Last Name'), t('First Name'), t('Email'), t('Phone Number'))),
+    '#options' => drupal_map_assoc(array(
+      t('Last Name'),
+      t('First Name'),
+      t('Email'),
+      t('Phone Number'))),
     '#title' => t('Fields sent to Insight.ly'),
-    '#default_value' => variable_get('insightly_drupal_chosen_fields', array(t('Last Name'), t('First Name'), t('Email'), t('Phone Number'))),
+    '#default_value' => variable_get('insightly_drupal_chosen_fields', array(
+      t('Last Name'),
+      t('First Name'),
+      t('Email'),
+      t('Phone Number'))),
     '#required' => TRUE,
   );
   return system_settings_form($form);
