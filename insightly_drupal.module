@@ -136,7 +136,7 @@ function insightly_drupal_form($form, &$form_state) {
     '#type' => 'checkboxes',
     '#options' => drupal_map_assoc($keys),
     '#title' => 'Select the forms where Insightly Integration for Drupal is used.',
-    '#default_value' => variable_get('insightly_drupal_chosen_forms', $keys),      
+    '#default_value' => variable_get('insightly_drupal_chosen_forms', $keys),
   );
   return system_settings_form($form);
 }
