@@ -1,2 +1,0 @@
-insightly_drupal
-================
