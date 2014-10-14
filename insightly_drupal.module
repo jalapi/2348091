@@ -107,10 +107,6 @@ function insightly_drupal_menu() {
 function insightly_drupal_form($form, &$form_state) {
   $info = entity_get_info('entityform');
   $keys = array_keys($info['bundles']);
-  dpm($keys);
-  dpm($info);
-  dpm(entity_get_info());
-  dpm(field_info_field('field_last_name'));
   $form['insightly_drupal_apikey'] = array(
     '#type' => 'textfield',
     '#title' => t('Your Insight.ly API key'),
@@ -141,15 +137,32 @@ function insightly_drupal_form($form, &$form_state) {
     '#title' => 'Select the forms where Insightly Integration for Drupal is used.',
     '#default_value' => variable_get('insightly_drupal_chosen_forms', $keys),
   );
-  foreach ($keys as $key){
-    dpm($key);
-    dpm(field_info_field('field_last_name')['bundles']['entityform']);
-    
-    if (in_array($key, field_info_field('field_last_name')['bundles']['entityform'])) {
-      dpm("löytyy");
-    
-      $form['insightly_drupal_chosen_forms']['testform']['#disabled'] = TRUE;
+  foreach ($keys as $key) {
+    $selected_fields = variable_get('insightly_drupal_chosen_fields');
+
+    if ($selected_fields['Last Name'] !== 0) {
+      if (! in_array($key, field_info_field('field_last_name')['bundles']['entityform'])) {
+        $form['insightly_drupal_chosen_forms'][$key]['#disabled'] = TRUE;
+      }
     }
+
+    if ($selected_fields['First Name'] !== 0) {
+      if (! in_array($key, field_info_field('field_first_name')['bundles']['entityform'])) {
+        $form['insightly_drupal_chosen_forms'][$key]['#disabled'] = TRUE;
+       }
+    }
+
+    if ($selected_fields['Email'] !== 0) {
+      if (! in_array($key, field_info_field('field_email_address')['bundles']['entityform'])) {
+        $form['insightly_drupal_chosen_forms'][$key]['#disabled'] = TRUE;
+      }
+    }
+
+    if ($selected_fields['Phone Number'] !== 0) {
+      if (! in_array($key, field_info_field('field_phone_number')['bundles']['entityform'])) {
+        $form['insightly_drupal_chosen_forms'][$key]['#disabled'] = TRUE;
+      }
+    }  
   }
   return system_settings_form($form);
 }
