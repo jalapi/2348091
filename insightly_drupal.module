@@ -57,7 +57,7 @@ function insightly_drupal_submithook() {
   date_default_timezone_set('UTC');
   $date = date('Y-m-d H:m:s');
 
-  $contact = '{"CONTACT_ID":0,"SALUTATION":null,"FIRST_NAME":"' . $first_name . '","LAST_NAME":"' . $last_name . '","BACKGROUND":null,"IMAGE_URL":"http://s3.amazonaws.com/insightly.userfiles/367601/","DEFAULT_LINKED_ORGANISATION":null,"DATE_CREATED_UTC":"' . $date . '","DATE_UPDATED_UTC":"' . $date . '","VISIBLE_TO":"EVERYONE","VISIBLE_TEAM_ID":null,"VISIBLE_USER_IDS":null,"CUSTOMFIELDS":[],"ADDRESSES":[],"CONTACTINFOS":[{"CONTACT_INFO_ID":0,"TYPE":"PHONE","SUBTYPE":"Work","LABEL":null,"DETAIL":"' . $phone_number . '"}, {"CONTACT_INFO_ID":0,"TYPE":"EMAIL","SUBTYPE":"Work","LABEL":null,"DETAIL":"'   . $email_address . '"}],"DATES":[],"TAGS":[],"LINKS":[],"CONTACTLINKS":[],"EMAILLINKS":null}';
+  $contact = '{"CONTACT_ID":0,"SALUTATION":null,"FIRST_NAME":"' . $first_name . '","LAST_NAME":"' . $last_name . '","BACKGROUND":null,"IMAGE_URL":"http://s3.amazonaws.com/insightly.userfiles/367601/","DEFAULT_LINKED_ORGANISATION":null,"DATE_CREATED_UTC":"' . $date . '","DATE_UPDATED_UTC":"' . $date . '","VISIBLE_TO":"EVERYONE","VISIBLE_TEAM_ID":null,"VISIBLE_USER_IDS":null,"CUSTOMFIELDS":[],"ADDRESSES":[],"CONTACTINFOS":[{"CONTACT_INFO_ID":0,"TYPE":"PHONE","SUBTYPE":"Work","LABEL":null,"DETAIL":"' . $phone_number . '"}, {"CONTACT_INFO_ID":1,"TYPE":"EMAIL","SUBTYPE":"Work","LABEL":null,"DETAIL":"'   . $email_address . '"}],"DATES":[],"TAGS":[],"LINKS":[],"CONTACTLINKS":[],"EMAILLINKS":null}';
 
   $url = 'https://api.insight.ly/v2.1/Contacts';
   $ch = curl_init($url);
@@ -79,7 +79,8 @@ function insightly_drupal_submithook() {
   curl_setopt($ch, CURLOPT_POST, 1);
   curl_setopt($ch, CURLOPT_POSTFIELDS, $contact);
 
-  curl_exec($ch);
+  dpm($contact);
+  dpm(curl_exec($ch));
   curl_error($ch);
 
   curl_close($ch);
@@ -129,6 +130,7 @@ function insightly_drupal_form($form, &$form_state) {
       t('First Name'),
       t('Email'),
       t('Phone Number'))),
+    '#description' => 'First choose the fields, then save, then choose the forms and save again.',
     '#required' => TRUE,
   );
   $form['insightly_drupal_chosen_forms'] = array(
