@@ -42,22 +42,24 @@ function insightly_drupal_submithook() {
 
   if ($chosen_fields['Phone Number'] !== 0) {
     $phone_number = $_insightly_drupal_form['#entity']->field_phone_number[$lang][0]['value'];
+    $phone_contact = '{"CONTACT_INFO_ID":0,"TYPE":"PHONE","SUBTYPE":"Work","LABEL":null,"DETAIL":"' . $phone_number . '"}, ';
   }
   else {
-    $phone_number = 'N/A';
+    $phone_contact = '';
   }
 
   if ($chosen_fields['Email'] !== 0) {
     $email_address = $_insightly_drupal_form['#entity']->field_email_address[$lang][0]['value'];
+    $email_contact = '{"CONTACT_INFO_ID":1,"TYPE":"EMAIL","SUBTYPE":"Work","LABEL":null,"DETAIL":"'   . $email_address . '"}';
   }
   else {
-    $email_address = 'N/A';
+    $email_contact = '';
   }
 
   date_default_timezone_set('UTC');
   $date = date('Y-m-d H:m:s');
 
-  $contact = '{"CONTACT_ID":0,"SALUTATION":null,"FIRST_NAME":"' . $first_name . '","LAST_NAME":"' . $last_name . '","BACKGROUND":null,"IMAGE_URL":"http://s3.amazonaws.com/insightly.userfiles/367601/","DEFAULT_LINKED_ORGANISATION":null,"DATE_CREATED_UTC":"' . $date . '","DATE_UPDATED_UTC":"' . $date . '","VISIBLE_TO":"EVERYONE","VISIBLE_TEAM_ID":null,"VISIBLE_USER_IDS":null,"CUSTOMFIELDS":[],"ADDRESSES":[],"CONTACTINFOS":[{"CONTACT_INFO_ID":0,"TYPE":"PHONE","SUBTYPE":"Work","LABEL":null,"DETAIL":"' . $phone_number . '"}, {"CONTACT_INFO_ID":1,"TYPE":"EMAIL","SUBTYPE":"Work","LABEL":null,"DETAIL":"'   . $email_address . '"}],"DATES":[],"TAGS":[],"LINKS":[],"CONTACTLINKS":[],"EMAILLINKS":null}';
+  $contact = '{"CONTACT_ID":0,"SALUTATION":null,"FIRST_NAME":"' . $first_name . '","LAST_NAME":"' . $last_name . '","BACKGROUND":null,"IMAGE_URL":"http://s3.amazonaws.com/insightly.userfiles/367601/","DEFAULT_LINKED_ORGANISATION":null,"DATE_CREATED_UTC":"' . $date . '","DATE_UPDATED_UTC":"' . $date . '","VISIBLE_TO":"EVERYONE","VISIBLE_TEAM_ID":null,"VISIBLE_USER_IDS":null,"CUSTOMFIELDS":[],"ADDRESSES":[],"CONTACTINFOS":[' . $phone_contact . ' ' . $email_contact . '],"DATES":[],"TAGS":[],"LINKS":[],"CONTACTLINKS":[],"EMAILLINKS":null}';
 
   $url = 'https://api.insight.ly/v2.1/Contacts';
   $ch = curl_init($url);
