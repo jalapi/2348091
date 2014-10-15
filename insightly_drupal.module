@@ -30,14 +30,14 @@ function insightly_drupal_submithook() {
     $last_name = $_insightly_drupal_form['#entity']->field_last_name[$lang][0]['value'];
   }
   else {
-    $last_name = 'N/A';
+    $last_name = '';
   }
 
   if ($chosen_fields['First Name'] !== 0) {
     $first_name = $_insightly_drupal_form['#entity']->field_first_name[$lang][0]['value'];
   }
   else {
-    $first_name = 'N/A';
+    $first_name = '';
   }
 
   if ($chosen_fields['Phone Number'] !== 0) {
@@ -81,7 +81,8 @@ function insightly_drupal_submithook() {
   curl_setopt($ch, CURLOPT_POST, 1);
   curl_setopt($ch, CURLOPT_POSTFIELDS, $contact);
 
-  curl_exec($ch);
+  dpm($contact);
+  dpm(curl_exec($ch));
   curl_error($ch);
 
   curl_close($ch);
