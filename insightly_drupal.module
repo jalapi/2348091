@@ -81,8 +81,7 @@ function insightly_drupal_submithook() {
   curl_setopt($ch, CURLOPT_POST, 1);
   curl_setopt($ch, CURLOPT_POSTFIELDS, $contact);
 
-  dpm($contact);
-  dpm(curl_exec($ch));
+  curl_exec($ch);
   curl_error($ch);
 
   curl_close($ch);
