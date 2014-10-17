@@ -206,4 +206,3 @@ function insightly_drupal_help($path, $arg) {
       return $output;
   }
 }
-
