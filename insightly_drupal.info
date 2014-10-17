@@ -1,6 +1,8 @@
 name = Insightly Integration for Drupal
 description = A module used to send information from a contact form to Insightly
 core = 7.x
+package = Entityforms
+
 dependencies[] = entityform
 dependencies[] = dblog
 configure = admin/config/content/insightly_drupal
