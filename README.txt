@@ -1,15 +1,23 @@
-Introduction
+INTRODUCTION
 ============
-
 Insightly Integration for Drupal module takes the contact information from an 
 EntityForm and sends it to Insightly CRM. From the configuration page you can 
 select which fields to send to Insightly. Possible fields are first and last 
 name, phone number and email address. You can also select the forms used.
 
+REQUIREMENTS
+============
+This module requires the following modules:
+ * Entityform (https://www.drupal.org/project/entityform)
 
-How to use
+INSTALLATION
+============
+ Install as you would normally install a contributed Drupal module. See:
+ https://drupal.org/documentation/install/modules-themes/modules-7
+ for further information.
+
+CONFIGURATION
 ==========
-
 Insightly Integration for Drupal module is super-easy to use.
 
 1. Enable the module from the Modules list.
@@ -26,8 +34,10 @@ The fields selected must be named field_last_name, field_first_name,
 field_phone_number and field_email_address for the module to recognize them.
 
 
-Sponsored by
+MAINTAINERS
 ============
+Current maintainer:
+ * Teemu Aro (teemuaro) - https://www.drupal.org/user/3014169
 
-Insightly Integration for Drupal module development was sponsored by Drupaletti 
-Oy (http://www.drupaletti.fi).
+This project has been sponsored by:
+ * Drupaletti Oy (http://www.drupaletti.fi)

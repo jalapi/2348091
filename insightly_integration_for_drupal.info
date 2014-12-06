@@ -5,4 +5,4 @@ package = Entityforms
 
 dependencies[] = entityform
 dependencies[] = dblog
-configure = admin/config/content/insightly_drupal
+configure = admin/config/content/insightly_integration_for_drupal
