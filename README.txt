@@ -18,7 +18,7 @@ INSTALLATION
 
 CONFIGURATION
 ==========
-Insightly Integration for Drupal module is super-easy to use.
+Configure the module at admin/help/insightly_integration_for_drupal:
 
 1. Enable the module from the Modules list.
 2. Configure the module.

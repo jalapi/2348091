@@ -1,9 +1,11 @@
 <?php
 
 /**
- * Global variable used to transfer the form to the hook.
+ * @file 
+ * This file handles the majority of module's functionality.
  */
 
+// Global variable used to transfer the form to the hook.
 $_insightly_integration_for_drupal_form = 0;
 
 /**
@@ -13,7 +15,7 @@ function insightly_integration_for_drupal_form_entityform_edit_form_alter(&$form
   $chosen_forms = variable_get('insightly_integration_for_drupal_chosen_forms');
   if ($chosen_forms[$form['#bundle']] !== 0) {
     global $_insightly_integration_for_drupal_form; $_insightly_integration_for_drupal_form = $form;
-    $form['actions']['submit']['#submit'] = array('entityform_edit_form_submit', 'insightly_integration_for_drupal_validate');
+    $form['actions']['submit']['#submit'] = array('insightly_integration_for_drupal_validate');
   }
 }
 
@@ -50,7 +52,7 @@ function insightly_integration_for_drupal_validate() {
 
   if ($chosen_fields['Email'] !== 0) {
     $email_address = $_insightly_integration_for_drupal_form['#entity']->field_email_address[$lang][0]['value'];
-    $email_contact = '{"CONTACT_INFO_ID":1,"TYPE":"EMAIL","SUBTYPE":"Work","LABEL":null,"DETAIL":"'   . $email_address . '"}';
+    $email_contact = '{"CONTACT_INFO_ID":1,"TYPE":"EMAIL","SUBTYPE":"Work","LABEL":null,"DETAIL":"' . $email_address . '"}';
   }
   else {
     $email_contact = '';
@@ -62,29 +64,20 @@ function insightly_integration_for_drupal_validate() {
   $contact = '{"CONTACT_ID":0,"SALUTATION":null,"FIRST_NAME":"' . $first_name . '","LAST_NAME":"' . $last_name . '","BACKGROUND":null,"IMAGE_URL":"http://s3.amazonaws.com/insightly.userfiles/367601/","DEFAULT_LINKED_ORGANISATION":null,"DATE_CREATED_UTC":"' . $date . '","DATE_UPDATED_UTC":"' . $date . '","VISIBLE_TO":"EVERYONE","VISIBLE_TEAM_ID":null,"VISIBLE_USER_IDS":null,"CUSTOMFIELDS":[],"ADDRESSES":[],"CONTACTINFOS":[' . $phone_contact . ' ' . $email_contact . '],"DATES":[],"TAGS":[],"LINKS":[],"CONTACTLINKS":[],"EMAILLINKS":null}';
 
   $url = 'https://api.insight.ly/v2.1/Contacts';
-  $ch = curl_init($url);
 
   $user = variable_get('insightly_integration_for_drupal_apikey', 0);
   if ($user == 0) {
     watchdog('insightly_integration_for_drupal', 'API key not set!');
   }
   $user = base64_encode($user);
-
-  curl_setopt($ch,
-    CURLOPT_HTTPHEADER,
-    array('Content-Type: application/json',
-      'Authorization: Basic ' . $user));
-  curl_setopt($ch, CURLOPT_HEADER, 0);
-  curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-  curl_setopt($ch, CURLOPT_POST, 1);
-  curl_setopt($ch, CURLOPT_POSTFIELDS, $contact);
-
-  curl_exec($ch);
-  curl_error($ch);
-
-  curl_close($ch);
+  
+  $http_options = array(
+    'method' => 'POST',
+    'headers' => array('Content-Type' => 'application/json',
+      'Authorization' => 'Basic ' . $user),
+    'data' => $contact,
+  );
+  drupal_http_request($url, $http_options);
 }
 
 /**
@@ -176,12 +169,12 @@ function insightly_integration_for_drupal_form($form, &$form_state) {
 function insightly_integration_for_drupal_help($path, $arg) {
   switch ($path) {
     case 'admin/help#insightly_integration_for_drupal':
-      $path = dirname(__FILE__) . '/README.md';
+      $path = drupal_get_path("module", "insightly_integration_for_drupal") . "/README.md";
       if (file_exists($path)) {
         $readme = file_get_contents($path);
       }
       else {
-        $path = dirname(__FILE__) . '/README.txt';
+        $path = drupal_get_path('module', "insightly_integration_for_drupal") . "/README.txt";
         if (file_exists($path)) {
           $readme = file_get_contents($path);
         }
