@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file 
+ * @file
  * This file handles the majority of module's functionality.
  */
 
@@ -72,10 +72,10 @@ function insightly_integration_for_drupal_validate() {
   }
   else {
     $user = base64_encode($user);
-    
     $http_options = array(
       'method' => 'POST',
-      'headers' => array('Content-Type' => 'application/json',
+      'headers' => array(
+        'Content-Type' => 'application/json',
         'Authorization' => 'Basic ' . $user),
       'data' => $contact,
     );
