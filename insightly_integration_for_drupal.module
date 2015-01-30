@@ -14,7 +14,8 @@ $_insightly_integration_for_drupal_form = 0;
 function insightly_integration_for_drupal_form_entityform_edit_form_alter(&$form, &$form_state) {
   $chosen_forms = variable_get('insightly_integration_for_drupal_chosen_forms');
   if ($chosen_forms[$form['#bundle']] !== 0) {
-    global $_insightly_integration_for_drupal_form; $_insightly_integration_for_drupal_form = $form;
+    global $_insightly_integration_for_drupal_form;
+    $_insightly_integration_for_drupal_form = $form;
     $form['actions']['submit']['#submit'] = array('insightly_integration_for_drupal_validate');
   }
 }
@@ -69,15 +70,17 @@ function insightly_integration_for_drupal_validate() {
   if ($user == 0) {
     watchdog('insightly_integration_for_drupal', 'API key not set!');
   }
-  $user = base64_encode($user);
-  
-  $http_options = array(
-    'method' => 'POST',
-    'headers' => array('Content-Type' => 'application/json',
-      'Authorization' => 'Basic ' . $user),
-    'data' => $contact,
-  );
-  drupal_http_request($url, $http_options);
+  else {
+    $user = base64_encode($user);
+    
+    $http_options = array(
+      'method' => 'POST',
+      'headers' => array('Content-Type' => 'application/json',
+        'Authorization' => 'Basic ' . $user),
+      'data' => $contact,
+    );
+    drupal_http_request($url, $http_options);
+  }
 }
 
 /**
